@@ -1,34 +1,27 @@
 ## Description
 
-___Add your PR description here, deleting this example___
+Landing page elements added to DOM and styled according to template provided by client. Header and footer re-factored to match same specs.
 
 #### Video Link
 
-[Loom Video](Add your loom video link here)
+[Loom Video] https://www.loom.com/share/bb15227f108d48359d10eafbe3decb55?sid=5ec7f20c-29f1-4220-8007-447294abde41
 
 #### Jira Link
 
-___Paste your jira ticket link here, deleting this example___
-
-(Example below):
-
-https://bloomtechlabs.atlassian.net/browse/BL-637
+https://github.com/BloomTech-Labs/asylum-rg-fe-starter/blob/main/tickets/firstTicket.md
 
 ## Type of change
 
-___Please delete options that are not relevant.___
-
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] This change requires a documentation update
+- [x] Bug fix (non-breaking change which fixes an issue)
+- [x] New feature (non-breaking change which adds functionality)
 
 ## Checklist:
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have removed unnecessary comments/console logs from my code
-- [ ] My changes generate no new warnings
-- [ ] I have checked my code and corrected any misspellings
-- [ ] No duplicate code left within changed files
-- [ ] Size of pull request kept to a minimum
-- [ ] Pull request description clearly describes changes made & motivations for said changes
+- [x] My code follows the style guidelines of this project
+- [x] I have performed a self-review of my own code
+- [x] I have removed unnecessary comments/console logs from my code
+- [x] My changes generate no new warnings
+- [x] I have checked my code and corrected any misspellings
+- [x] No duplicate code left within changed files
+- [x] Size of pull request kept to a minimum
+- [x] Pull request description clearly describes changes made & motivations for said changes
