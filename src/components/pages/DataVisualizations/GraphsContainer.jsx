@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useHistory, Switch, Route } from 'react-router-dom';
 import AllOfficesRoute from './AllOfficesRoute';
 import SingleOfficeRoute from './SingleOfficeRoute';
 import 'antd/dist/antd.css';
 import { Select } from 'antd';
 import { colors } from '../../../styles/data_vis_colors';
+import {
+  resetVisualizationQuery,
+  setAsylumOfficeFilter,
+} from '../../../state/actionCreators';
+import { connect } from 'react-redux';
 
 const { Option } = Select;
 const { background_color } = colors;
 
-function GraphsContainer() {
+const mapStateToProps = state => {
+  return {
+    office: state.filterReducer.asylumOffice,
+  };
+};
+
+function GraphsContainer(props) {
+  const { dispatch, office } = props;
   const [view, set_view] = useState('time-series');
   const history = useHistory();
+  const firstUpdate = useRef(true);
   const offices = [
     'All Offices',
     'Los Angeles, CA',
@@ -25,98 +38,29 @@ function GraphsContainer() {
     'Miami, FL',
     'New Orleans, LA',
   ];
-  function handle_office_select(value) {
-    // if (view === 'office-heat-map') {
-    //   set_view('time-series');
-    // }
-    // if (value === 'All') {
-    //   history.push(
-    //     `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
-    //   );
-    // }
-    // history.push(
-    //   `/graphs/${value}/${view === 'office-heat-map' ? 'time-series' : view}`
-    // );
 
-    switch (value) {
-      case 'All Offices':
-        history.push(
-          `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
-        );
-        break;
-      case 'Los Angeles, CA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'San Francisco, CA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'New York, NY':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Houston, TX':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Chicago, IL':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Newark, NJ':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Arlington, VA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Boston, MA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Miami, FL':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'New Orleans, LA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      default:
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+  });
+
+  async function handle_office_select(value) {
+    if (view === 'office-heat-map') {
+      set_view('time-series');
+    }
+
+    if (value === 'All Offices') {
+      dispatch(resetVisualizationQuery(view, value));
+      await dispatch(setAsylumOfficeFilter(value));
+      history.push(`/graphs/all/${view}`);
+    } else {
+      await dispatch(setAsylumOfficeFilter(value));
+      history.push(`/graphs/${office}/${view}`);
     }
   }
+
   return (
     <div
       style={{
@@ -150,17 +94,13 @@ function GraphsContainer() {
             placeholder="Select an Asylum Office"
             onSelect={value => handle_office_select(value)}
           >
-            {offices.map((office, idx) =>
-              office === 'All' ? (
-                <Option key={idx} value={'all'}>
-                  {office}
-                </Option>
-              ) : (
+            {offices.map((office, idx) => {
+              return (
                 <Option key={idx} value={office}>
                   {office}
                 </Option>
-              )
-            )}
+              );
+            })}
           </Select>
         </div>
         <Switch>
@@ -183,4 +123,4 @@ function GraphsContainer() {
   );
 }
 
-export default GraphsContainer;
+export default connect(mapStateToProps)(GraphsContainer);

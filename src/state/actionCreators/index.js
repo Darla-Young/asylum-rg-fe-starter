@@ -8,7 +8,17 @@ import {
   SET_VISUALIZATION_DATA,
   RESET_VISUALIZATION_QUERY,
   SET_HEAT_MAP_YEARS,
+  SET_ASYLUM_OFFICE_FILTER,
 } from '../actionTypes';
+
+export const setAsylumOfficeFilter = office => {
+  return {
+    type: SET_ASYLUM_OFFICE_FILTER,
+    payload: {
+      office,
+    },
+  };
+};
 
 export const setVisualizationData = (view, office, data) => {
   return {

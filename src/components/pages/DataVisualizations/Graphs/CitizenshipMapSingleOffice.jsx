@@ -20,15 +20,13 @@ function CitizenshipMapSingleOffice(props) {
     z: [],
   });
   const [rowsForTable, setRowsForTable] = useState([]);
+  const [geoScope, setGeoScope] = useState('world');
 
   useEffect(() => {
-    if (citizenshipMapData['countryGrantRateObj'] !== undefined) {
+    if (citizenshipMapData.countryGrantRateObj !== undefined) {
       setPlotlyGraphAxis({
-        locationsAndText:
-          citizenshipMapData['countryGrantRateObj']['countries'],
-        z: citizenshipMapData['countryGrantRateObj'][
-          'countriesPercentGranteds'
-        ],
+        locationsAndText: citizenshipMapData.countryGrantRateObj['countries'],
+        z: citizenshipMapData.countryGrantRateObj['countriesPercentGranteds'],
       });
     } else {
       setPlotlyGraphAxis({ locationsAndText: [], z: [] });
@@ -39,6 +37,7 @@ function CitizenshipMapSingleOffice(props) {
       setRowsForTable(citizenshipMapData.rowsForTable);
     }
   }, [citizenshipMapData]);
+
   const geoScopeArray = [
     'world',
     'europe',
@@ -47,12 +46,13 @@ function CitizenshipMapSingleOffice(props) {
     'north america',
     'south america',
   ];
-  const [geoScope, setGeoScope] = useState('world');
+
   const handleScopeChange = e => {
     //update Plotly region based on dropdown selection
     const { value } = e.target;
     setGeoScope(value);
   };
+
   const columnsForTable = [
     'Citizenship',
     'Total Cases',
@@ -60,6 +60,7 @@ function CitizenshipMapSingleOffice(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
+
   return (
     <div
       className="citizenship-map-single-office-container"
@@ -80,9 +81,9 @@ function CitizenshipMapSingleOffice(props) {
           {
             type: 'choropleth',
             locationmode: 'country names',
-            locations: plotlyGraphAxis['locationsAndText'],
-            z: plotlyGraphAxis['z'],
-            text: plotlyGraphAxis['locationsAndText'],
+            locations: plotlyGraphAxis.locationsAndText,
+            z: plotlyGraphAxis.z,
+            text: plotlyGraphAxis.locationsAndText,
             colorscale: [
               [0, 'rgb(255,78,17)'],
               [0.5, 'rgb(250,183,51)'],
@@ -109,8 +110,12 @@ function CitizenshipMapSingleOffice(props) {
       />
       <label for="regionSelect">Select another region below</label>
       <select name="regionSelect" onChange={handleScopeChange}>
-        {geoScopeArray.map(a => {
-          return <option value={a}>{a.toUpperCase()}</option>;
+        {geoScopeArray.map((a, idx) => {
+          return (
+            <option key={idx} value={a}>
+              {a.toUpperCase()}
+            </option>
+          );
         })}
       </select>
       <p>Table view</p>
