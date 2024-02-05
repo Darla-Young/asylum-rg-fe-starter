@@ -54,7 +54,6 @@ const mapStateToProps = (state, ownProps) => {
 function YearLimitsSelect(props) {
   let { view, office, dispatch, clearQuery, updateStateWithNewData, years } =
     props;
-
   // const yearInputsOnChange = (view, office, e) => {
   //   dispatch(
   //     setHeatMapYears(
@@ -64,14 +63,11 @@ function YearLimitsSelect(props) {
   //       e.target.value
   //     ));
   // };
-
   const stateSettingFn = (view, office, data) => {
     const plotlyReadyData = rawApiDataToPlotlyReadyInfo(view, office, data);
     dispatch(setVisualizationData(view, office, plotlyReadyData));
   };
-
   const [form] = Form.useForm();
-
   useInterval(() => {
     form.setFieldsValue({
       year_start: years[0],
@@ -183,7 +179,9 @@ function YearLimitsSelect(props) {
           color: 'white',
           marginLeft: '105px',
         }}
-        onClick={() => clearQuery(view, office)}
+        onClick={() => {
+          clearQuery(view, office);
+        }}
       >
         Clear Query
       </Button>

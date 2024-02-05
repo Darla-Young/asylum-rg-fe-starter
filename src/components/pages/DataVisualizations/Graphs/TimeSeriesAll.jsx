@@ -23,7 +23,6 @@ function TimeSeriesAll(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
-
   useEffect(() => {
     if (timeSeriesAllData.rowsForAllDisplay === undefined) {
       setRowsForAllDisplay([]);
@@ -31,7 +30,6 @@ function TimeSeriesAll(props) {
       setRowsForAllDisplay(timeSeriesAllData.rowsForAllDisplay);
     }
   }, [timeSeriesAllData]);
-
   return (
     <div
       className="time-series-all-container"

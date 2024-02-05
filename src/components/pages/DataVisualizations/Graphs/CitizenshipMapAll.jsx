@@ -48,7 +48,6 @@ function CitizenshipMapAll(props) {
     'south america',
   ];
   const [geoScope, setGeoScope] = useState('world');
-
   const handleScopeChange = e => {
     //update Plotly region based on dropdown selection
     const { value } = e.target;

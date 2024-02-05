@@ -7,9 +7,8 @@ import { colors } from '../../../../styles/data_vis_colors';
 const { background_color } = colors;
 
 const mapStateToProps = (state, ownProps) => {
-  const office = state.filterReducer.asylumOffice;
+  const { office } = ownProps;
   return {
-    office: office,
     timeSeriesData: state.vizReducer.offices[office].timeSeriesData,
   };
 };

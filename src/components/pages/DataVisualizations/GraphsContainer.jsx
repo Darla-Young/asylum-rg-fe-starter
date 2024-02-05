@@ -1,30 +1,17 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, Switch, Route } from 'react-router-dom';
 import AllOfficesRoute from './AllOfficesRoute';
 import SingleOfficeRoute from './SingleOfficeRoute';
 import 'antd/dist/antd.css';
 import { Select } from 'antd';
 import { colors } from '../../../styles/data_vis_colors';
-import {
-  resetVisualizationQuery,
-  setAsylumOfficeFilter,
-} from '../../../state/actionCreators';
-import { connect } from 'react-redux';
 
 const { Option } = Select;
 const { background_color } = colors;
 
-const mapStateToProps = state => {
-  return {
-    office: state.filterReducer.asylumOffice,
-  };
-};
-
-function GraphsContainer(props) {
-  const { dispatch, office } = props;
+function GraphsContainer() {
   const [view, set_view] = useState('time-series');
   const history = useHistory();
-  const firstUpdate = useRef(true);
   const offices = [
     'All Offices',
     'Los Angeles, CA',
@@ -38,26 +25,16 @@ function GraphsContainer(props) {
     'Miami, FL',
     'New Orleans, LA',
   ];
-
-  useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-  });
-
-  async function handle_office_select(value) {
-    if (view === 'office-heat-map') {
-      set_view('time-series');
-    }
-
+  function handle_office_select(value) {
+    if (view === 'office-heat-map') set_view('time-series');
     if (value === 'All Offices') {
-      dispatch(resetVisualizationQuery(view, value));
-      await dispatch(setAsylumOfficeFilter(value));
-      history.push(`/graphs/all/${view}`);
+      history.push(
+        `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
+      );
     } else {
-      await dispatch(setAsylumOfficeFilter(value));
-      history.push(`/graphs/${office}/${view}`);
+      history.push(
+        `/graphs/${value}/${view === 'office-heat-map' ? 'time-series' : view}`
+      );
     }
   }
 
@@ -94,13 +71,17 @@ function GraphsContainer(props) {
             placeholder="Select an Asylum Office"
             onSelect={value => handle_office_select(value)}
           >
-            {offices.map((office, idx) => {
-              return (
+            {offices.map((office, idx) =>
+              office === 'All' ? (
+                <Option key={idx} value={'all'}>
+                  {office}
+                </Option>
+              ) : (
                 <Option key={idx} value={office}>
                   {office}
                 </Option>
-              );
-            })}
+              )
+            )}
           </Select>
         </div>
         <Switch>
@@ -123,4 +104,4 @@ function GraphsContainer(props) {
   );
 }
 
-export default connect(mapStateToProps)(GraphsContainer);
+export default GraphsContainer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from './Graphs/CitizenshipMapSingleOffice';
 import TimeSeriesAll from './Graphs/TimeSeriesAll';
@@ -18,6 +18,7 @@ const { background_color } = colors;
 
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
+  const history = useHistory();
   let { office, view } = useParams();
 
   if (!view) {
@@ -55,7 +56,8 @@ function GraphWrapper(props) {
   }
 
   function updateStateWithNewData(
-    /*years,*/ view,
+    /*years,*/
+    view,
     office,
     stateSettingCallback
   ) {
@@ -81,6 +83,7 @@ function GraphWrapper(props) {
 
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
+    history.push(`/graphs/`);
   };
 
   return (
