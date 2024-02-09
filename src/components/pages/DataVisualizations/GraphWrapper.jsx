@@ -56,35 +56,23 @@ function GraphWrapper(props) {
   }
 
   function updateStateWithNewData(
-    /*years,*/
-    view,
+    /*years,*/ view,
     office,
     stateSettingCallback
   ) {
     const url = 'https://hrf-asylum-be-b.herokuapp.com/cases';
-
     axios
       .get(
-        `${url}/fiscalSummary`
-        // , {
-        //   params: {
-        //     from: years[0],
-        //     to: years[1],
-        //   },
-        // }
+        `${url}/fiscalSummary` /**, {params: {from: years[0], to: years[1]}} */
       )
-      .then(result => {
-        stateSettingCallback(view, office, result.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+      .then(result => stateSettingCallback(view, office, result.data))
+      .catch(err => console.error(err));
   }
 
-  const clearQuery = (view, office) => {
+  function clearQuery(view, office) {
     dispatch(resetVisualizationQuery(view, office));
     history.push(`/graphs/`);
-  };
+  }
 
   return (
     <div
