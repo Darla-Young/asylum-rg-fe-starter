@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
-import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
-import CitizenshipMapSingleOffice from './Graphs/CitizenshipMapSingleOffice';
-import TimeSeriesAll from './Graphs/TimeSeriesAll';
-import OfficeHeatMap from './Graphs/OfficeHeatMap';
-import TimeSeriesSingleOffice from './Graphs/TimeSeriesSingleOffice';
-import YearLimitsSelect from './YearLimitsSelect';
-import ViewSelect from './ViewSelect';
+import { useHistory } from 'react-router-dom';
+import CitizenshipMap from './StateSettingComponents/Views/CitizenshipMap';
+import OfficeHeatMap from './StateSettingComponents/Views/OfficeHeatMap';
+import TimeSeries from './StateSettingComponents/Views/TimeSeries';
+import YearLimitsSelect from './StateSettingComponents/Years/YearLimitsSelect';
+import ViewSelect from './StateSettingComponents/Views/ViewSelect';
 import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
 // import test_data from '../../../data/test_data.json';
@@ -17,69 +15,38 @@ import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 const { background_color } = colors;
 
 function GraphWrapper(props) {
-  const { set_view, dispatch } = props;
+  let { view, office, dispatch } = props;
   const history = useHistory();
-  let { office, view } = useParams();
 
-  if (!view) {
-    set_view('time-series');
-    view = 'time-series';
-  }
-
-  let map_to_render;
-
-  if (!office) {
+  const mapDisplay = view => {
     switch (view) {
       case 'time-series':
-        map_to_render = <TimeSeriesAll />;
-        break;
+        return <TimeSeries office={office} />;
       case 'office-heat-map':
-        map_to_render = <OfficeHeatMap />;
-        break;
+        return <OfficeHeatMap />;
       case 'citizenship':
-        map_to_render = <CitizenshipMapAll />;
-        break;
+        return <CitizenshipMap office={office} />;
       default:
         break;
     }
-  } else {
-    switch (view) {
-      case 'time-series':
-        map_to_render = <TimeSeriesSingleOffice office={office} />;
-        break;
-      case 'citizenship':
-        map_to_render = <CitizenshipMapSingleOffice office={office} />;
-        break;
-      default:
-        break;
-    }
-  }
+  };
 
-  function updateStateWithNewData(
-    /*years,*/
-    view,
-    office,
-    stateSettingCallback
-  ) {
+  const updateState = (/*years,*/ view, office, stateSettingCallback) => {
     const url = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
     axios
-      .get(
-        `${url}/fiscalSummary`
-        // , {
-        //   params: {
-        //     from: years[0],
-        //     to: years[1],
-        //   },
-        // }
-      )
+      .get(`${url}/fiscalSummary` /**{params: {from: years[0], to: years[1]}}*/)
       .then(result => {
+        console.log('fiscal summary', result);
         stateSettingCallback(view, office, result.data);
       })
-      .catch(err => {
-        console.error(err);
-      });
-  }
+      .catch(err => console.error(err));
+
+    axios
+      .get(`${url}/citizenshipSummary`)
+      .then(result => console.log('citizenship summary', result))
+      .catch(err => console.log(err));
+  };
 
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
@@ -98,7 +65,7 @@ function GraphWrapper(props) {
       }}
     >
       <ScrollToTopOnMount />
-      {map_to_render}
+      {mapDisplay(view)}
       <div
         className="user-input-sidebar-container"
         style={{
@@ -109,12 +76,12 @@ function GraphWrapper(props) {
           justifyContent: 'center',
         }}
       >
-        <ViewSelect set_view={set_view} />
+        <ViewSelect />
         <YearLimitsSelect
           view={view}
           office={office}
           clearQuery={clearQuery}
-          updateStateWithNewData={updateStateWithNewData}
+          updateState={updateState}
         />
       </div>
     </div>

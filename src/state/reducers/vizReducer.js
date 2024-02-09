@@ -29,230 +29,133 @@ import {
       ------------------------------------------------------
 */
 const currentYear = new Date().getFullYear();
+const officeData = {
+  timeSeriesData: {},
+  timeSeriesYears: [2015, currentYear],
+  citizenshipMapData: {},
+  citizenshipMapYears: [2015, currentYear],
+};
 export const initialState = {
-  timeSeriesAllData: {},
-  timeSeriesAllYears: [2015, currentYear],
-  officeHeatMapData: {},
-  officeHeatMapYears: [2015, currentYear],
-  citizenshipMapAllData: {},
-  citizenshipMapAllYears: [2015, currentYear],
+  view: 'time-series',
+  currentOffice: 'All Offices',
   offices: {
-    'Los Angeles, CA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
+    'All Offices': {
+      ...officeData,
+      officeHeatMapData: {},
+      officeHeatMapYears: [2015, currentYear],
     },
-    'San Francisco, CA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'New York, NY': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Houston, TX': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Chicago, IL': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Newark, NJ': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Arlington, VA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Boston, MA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Miami, FL': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'New Orleans, LA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
+    'Los Angeles, CA': { ...officeData },
+    'San Francisco, CA': { ...officeData },
+    'New York, NY': { ...officeData },
+    'Houston, TX': { ...officeData },
+    'Chicago, IL': { ...officeData },
+    'Newark, NJ': { ...officeData },
+    'Arlington, VA': { ...officeData },
+    'Boston, MA': { ...officeData },
+    'Miami, FL': { ...officeData },
+    'New Orleans, LA': { ...officeData },
   },
 };
 
 const vizReducer = (state = initialState, action) => {
-  let dataKey = '';
+  let dataKey, yearKey, office;
+
+  if (!action.payload) office = 'All Offices';
+  else office = action.payload.office;
+
   switch (action.type) {
     case RESET_VISUALIZATION_QUERY:
-      if (!action.payload.office) {
-        switch (action.payload.view) {
-          case 'time-series':
-            return {
-              ...state,
-              timeSeriesAllData: {},
-              timeSeriesAllYears: [2015, currentYear],
-            };
-          case 'office-heat-map':
-            return {
-              ...state,
-              officeHeatMapData: {},
-              officeHeatMapYears: [2015, currentYear],
-            };
-          case 'citizenship':
-            return {
-              ...state,
-              citizenshipMapAllData: {},
-              citizenshipMapAllYears: [2015, currentYear],
-            };
-          default:
-            return state;
-        }
-      } else {
-        switch (action.payload.view) {
-          case 'time-series':
-            return {
-              ...state,
-              offices: {
-                ...state.offices,
-                [action.payload.office]: {
-                  ...state.offices[action.payload.office],
-                  timeSeriesData: {},
-                  timeSeriesYears: [2015, currentYear],
-                },
-              },
-            };
-          case 'citizenship':
-            return {
-              ...state,
-              offices: {
-                ...state.offices,
-                [action.payload.office]: {
-                  ...state.offices[action.payload.office],
-                  citizenshipMapData: {},
-                  citizenshipMapYears: [2015, currentYear],
-                },
-              },
-            };
-          default:
-            return state;
-        }
+      switch (action.payload.view) {
+        case 'time-series':
+          dataKey = 'timeSeriesData';
+          yearKey = 'timeSeriesYears';
+          break;
+        case 'office-heat-map':
+          dataKey = 'officeHeatMapData';
+          yearKey = 'officeHeatMapYears';
+          break;
+        case 'citizenship':
+          dataKey = 'citizenshipMapData';
+          yearKey = 'citizenshipMapYears';
+          break;
+        default:
+          break;
       }
+      return {
+        ...state,
+        view: action.payload.view,
+        currentOffice: 'All Offices',
+        offices: {
+          ...state.offices,
+          [office]: {
+            ...state.offices[office],
+            [dataKey]: {},
+            [yearKey]: [2015, currentYear],
+          },
+        },
+      };
+
     case SET_VISUALIZATION_DATA:
-      if (!action.payload.office) {
-        switch (action.payload.view) {
-          case 'time-series':
-            dataKey = 'timeSeriesAllData';
-            break;
-          case 'office-heat-map':
-            dataKey = 'officeHeatMapData';
-            break;
-          case 'citizenship':
-            dataKey = 'citizenshipMapAllData';
-            break;
-          default:
-            break;
-        }
-        return {
-          ...state,
-          [dataKey]: action.payload.data,
-        };
-      } else {
-        switch (action.payload.view) {
-          case 'time-series':
-            dataKey = 'timeSeriesData';
-            break;
-          case 'citizenship':
-            dataKey = 'citizenshipMapData';
-            break;
-          default:
-            break;
-        }
-        return {
-          ...state,
-          offices: {
-            ...state.offices,
-            [action.payload.office]: {
-              ...state.offices[action.payload.office],
-              [dataKey]: action.payload.data,
-            },
-          },
-        };
+      switch (action.payload.view) {
+        case 'time-series':
+          dataKey = 'timeSeriesData';
+          break;
+        case 'office-heat-map':
+          dataKey = 'officeHeatMapData';
+          break;
+        case 'citizenship':
+          dataKey = 'citizenshipMapData';
+          break;
+        default:
+          break;
       }
+      return {
+        ...state,
+        view: action.payload.view,
+        currentOffice: office,
+        offices: {
+          ...state.offices,
+          [office]: {
+            ...state.offices[office],
+            [dataKey]: action.payload.data,
+          },
+        },
+      };
+
     case SET_HEAT_MAP_YEARS:
-      if (!action.payload.office) {
-        switch (action.payload.view) {
-          case 'time-series':
-            dataKey = 'timeSeriesAllYears';
-            break;
-          case 'office-heat-map':
-            dataKey = 'officeHeatMapYears';
-            break;
-          case 'citizenship':
-            dataKey = 'citizenshipMapAllYears';
-            break;
-          default:
-            dataKey = 'timeSeriesAllYears';
-            break;
-        }
-        return {
-          ...state,
-          [dataKey]:
-            action.payload.idx === 0
-              ? [action.payload.year, state[dataKey][1]]
-              : [state[dataKey][0], action.payload.year],
-        };
-      } else {
-        switch (action.payload.view) {
-          case 'time-series':
-            dataKey = 'timeSeriesYears';
-            break;
-          case 'citizenship':
-            dataKey = 'citizenshipMapYears';
-            break;
-          default:
-            dataKey = 'timeSeriesYears';
-            break;
-        }
-        return {
-          ...state,
-          offices: {
-            ...state.offices,
-            [action.payload.office]: {
-              ...state.offices[action.payload.office],
-              [dataKey]:
-                action.payload.idx === 0
-                  ? [
-                      action.payload.year,
-                      state.offices[action.payload.office][dataKey][1],
-                    ]
-                  : [
-                      state.offices[action.payload.office][dataKey][0],
-                      action.payload.year,
-                    ],
-            },
-          },
-        };
+      switch (action.payload.view) {
+        case 'time-series':
+          dataKey = 'timeSeriesYears';
+          break;
+        case 'citizenship':
+          dataKey = 'citizenshipMapYears';
+          break;
+        default:
+          dataKey = 'timeSeriesYears';
+          break;
       }
+      return {
+        ...state,
+        view: 'office-heat-map',
+        currentOffice: 'All Offices',
+        offices: {
+          ...state.offices,
+          'All Offices': {
+            ...state.offices['All Offices'],
+            [dataKey]:
+              action.payload.idx === 0 // what is this?
+                ? [
+                    state.offices['All Offices'][dataKey][1],
+                    action.payload.year,
+                  ]
+                : [
+                    state.offices['All Offices'][dataKey][0],
+                    action.payload.year,
+                  ],
+          },
+        },
+      };
+
     default:
       return state;
   }

@@ -3,51 +3,37 @@ import { Form, Button /*Input*/ } from 'antd';
 import {
   setVisualizationData,
   // setHeatMapYears,
-} from '../../../state/actionCreators';
+} from '../../../../../state/actionCreators';
 // import YearLimitsSlider from './YearLimitsSlider';
-import { rawApiDataToPlotlyReadyInfo, useInterval } from '../../../utils';
+import { rawApiDataToPlotlyReadyInfo, useInterval } from '../../../../../utils';
 
 import { connect } from 'react-redux';
-import { colors } from '../../../styles/data_vis_colors';
+import { colors } from '../../../../../styles/data_vis_colors';
 
 const { primary_accent_color } = colors;
 
 const mapStateToProps = (state, ownProps) => {
-  const { view, office } = ownProps;
-  if (office === 'all' || !office) {
-    switch (view) {
-      case 'time-series':
-        return {
-          years: state.vizReducer.timeSeriesAllYears,
-        };
-      case 'office-heat-map':
-        return {
-          years: state.vizReducer.officeHeatMapYears,
-        };
-      case 'citizenship':
-        return {
-          years: state.vizReducer.citizenshipMapAllYears,
-        };
-      default:
-        return {
-          years: ['', ''],
-        };
-    }
-  } else {
-    switch (view) {
-      case 'time-series':
-        return {
-          years: state.vizReducer.offices[office].timeSeriesYears,
-        };
-      case 'citizenship':
-        return {
-          years: state.vizReducer.offices[office].citizenshipMapYears,
-        };
-      default:
-        return {
-          years: ['', ''],
-        };
-    }
+  let { view } = ownProps;
+  let { office } = state;
+  if (!office) office = 'All Offices';
+
+  switch (view) {
+    case 'time-series':
+      return {
+        years: state.vizReducer[office].timeSeriesYears,
+      };
+    case 'office-heat-map':
+      return {
+        years: state.vizReducer[office].officeHeatMapYears,
+      };
+    case 'citizenship':
+      return {
+        years: state.vizReducer[office].citizenshipMapYears,
+      };
+    default:
+      return {
+        years: ['', ''],
+      };
   }
 };
 
@@ -78,7 +64,7 @@ function YearLimitsSelect(props) {
   useEffect(() => {
     updateStateWithNewData(/*years,*/ view, office, stateSettingFn);
   });
-
+  console.log('YearLimitsSelect', view, office);
   return (
     <div
       className="year-limits-select-container"

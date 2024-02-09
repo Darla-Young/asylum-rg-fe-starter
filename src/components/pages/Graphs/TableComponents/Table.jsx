@@ -1,6 +1,6 @@
 import React from 'react';
 import TableRow from './TableRow';
-import { colors } from '../../../../../styles/data_vis_colors';
+import { colors } from '../../../../styles/data_vis_colors';
 
 const { primary_accent_color } = colors;
 

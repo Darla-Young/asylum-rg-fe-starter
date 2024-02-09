@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Plot from 'react-plotly.js';
-import Table from './TableComponents/Table';
-import { colors } from '../../../../styles/data_vis_colors';
+import Table from '../../TableComponents/Table';
+import { colors } from '../../../../../styles/data_vis_colors';
 
 const { background_color } = colors;
 
 const mapStateToProps = state => {
   return {
-    officeHeatMapData: state.vizReducer.officeHeatMapData,
+    officeHeatMapData: state.vizReducer['All Offices'].officeHeatMapData,
   };
 };
 
@@ -45,7 +45,7 @@ function OfficeHeatMap(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
-
+  console.log('OfficeHeatMap', props);
   return (
     <div
       className="office-heat-map-container"

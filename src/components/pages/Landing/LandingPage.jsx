@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 // for the purposes of testing PageNav
 // import PageNav from '../../common/PageNav';
 
-function RenderLandingPage(props) {
+function RenderLandingPage() {
   const scrollToTop = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;

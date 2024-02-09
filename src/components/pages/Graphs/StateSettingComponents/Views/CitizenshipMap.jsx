@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Plot from 'react-plotly.js';
-import Table from './TableComponents/Table';
-import { colors } from '../../../../styles/data_vis_colors';
+import Table from '../../TableComponents/Table';
+import { colors } from '../../../../../styles/data_vis_colors';
 
-const { background_color } = colors;
+const { background_color, secondary_accent_color } = colors;
 
 const mapStateToProps = (state, ownProps) => {
   const { office } = ownProps;
   return {
-    citizenshipMapData: state.vizReducer.offices[office].citizenshipMapData,
+    citizenshipMapData: state.vizReducer[office].citizenshipMapData,
   };
 };
 
-function CitizenshipMapSingleOffice(props) {
+function CitizenshipMap(props) {
   const { office, citizenshipMapData } = props;
   const [plotlyGraphAxis, setPlotlyGraphAxis] = useState({
     locationsAndText: [],
@@ -60,9 +60,10 @@ function CitizenshipMapSingleOffice(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
+  console.log('CitizenshipMap', props);
   return (
     <div
-      className="citizenship-map-single-office-container"
+      className="citizenship-map-container"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -97,7 +98,7 @@ function CitizenshipMapSingleOffice(props) {
           title: 'USCIS Asylum Grant Rates by Citizenship of Asylum Seeker',
           paper_bgcolor: background_color,
           hoverlabel: {
-            bordercolor: background_color,
+            bordercolor: secondary_accent_color,
           },
           geo: {
             scope: geoScope,
@@ -105,9 +106,13 @@ function CitizenshipMapSingleOffice(props) {
           height: 500,
           width: 700,
         }}
-        style={{ width: '100%', fontWeight: '900' }}
+        style={{
+          width: '100%',
+          fontWeight: '900',
+          backgroundColor: background_color,
+        }}
       />
-      <label for="regionSelect">Select another region below</label>
+      <label htmlFor="regionSelect">Select another region below</label>
       <select name="regionSelect" onChange={handleScopeChange}>
         {geoScopeArray.map(a => {
           return <option value={a}>{a.toUpperCase()}</option>;
@@ -119,9 +124,11 @@ function CitizenshipMapSingleOffice(props) {
         columns={columnsForTable}
         tableWidth={'100%'}
         rowHeight={'50px'}
+        bordered={true}
+        scroll={{ y: 550 }}
       />
     </div>
   );
 }
 
-export default connect(mapStateToProps)(CitizenshipMapSingleOffice);
+export default connect(mapStateToProps)(CitizenshipMap);

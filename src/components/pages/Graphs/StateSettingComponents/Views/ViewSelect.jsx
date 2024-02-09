@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button } from 'antd';
-import { colors } from '../../../styles/data_vis_colors';
+import { colors } from '../../../../../styles/data_vis_colors';
 
 const { background_color } = colors;
 
@@ -9,12 +9,13 @@ function ViewSelect(props) {
   const history = useHistory();
   const { set_view } = props;
   let { office } = useParams();
+  if (!office) office = 'All Offices';
 
   function update_view(view, office) {
     set_view(view);
-    history.push(`/graphs/${office ? office : 'all'}/${view}`);
+    history.push(`/graphs/${office}/${view}`);
   }
-
+  console.log('ViewSelect', office);
   return (
     <div
       className="view-select-container"

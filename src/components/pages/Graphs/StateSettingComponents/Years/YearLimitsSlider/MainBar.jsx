@@ -9,41 +9,26 @@ import { colors } from '../../../../styles/data_vis_colors';
 const { primary_accent_color } = colors;
 
 const mapStateToProps = (state, ownProps) => {
-  const { view, office } = ownProps;
-  if (office === 'all' || !office) {
-    switch (view) {
-      case 'time-series':
-        return {
-          years: state.vizReducer.timeSeriesAllYears,
-        };
-      case 'office-heat-map':
-        return {
-          years: state.vizReducer.officeHeatMapYears,
-        };
-      case 'citizenship':
-        return {
-          years: state.vizReducer.citizenshipMapAllYears,
-        };
-      default:
-        return {
-          years: ['', ''],
-        };
-    }
-  } else {
-    switch (view) {
-      case 'time-series':
-        return {
-          years: state.vizReducer.offices[office].timeSeriesYears,
-        };
-      case 'citizenship':
-        return {
-          years: state.vizReducer.offices[office].citizenshipMapYears,
-        };
-      default:
-        return {
-          years: ['', ''],
-        };
-    }
+  let { view, office } = ownProps;
+  if (!office) office = 'All Offices';
+
+  switch (view) {
+    case 'time-series':
+      return {
+        years: state.vizReducer[office].timeSeriesYears,
+      };
+    case 'office-heat-map':
+      return {
+        years: state.vizReducer[office].officeHeatMapYears,
+      };
+    case 'citizenship':
+      return {
+        years: state.vizReducer[office].citizenshipMapYears,
+      };
+    default:
+      return {
+        years: ['', ''],
+      };
   }
 };
 

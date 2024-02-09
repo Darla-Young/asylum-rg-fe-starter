@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Plot from 'react-plotly.js';
-import Table from './TableComponents/Table';
-import { colors } from '../../../../styles/data_vis_colors';
+import Table from '../../TableComponents/Table';
+import { colors } from '../../../../../styles/data_vis_colors';
 
 const { background_color } = colors;
 
-const mapStateToProps = (state, ownProps) => {
-  const { office } = ownProps;
+const mapStateToProps = state => {
+  let { office } = state;
+
+  if (!office) office = 'All Offices';
+
   return {
-    timeSeriesData: state.vizReducer.offices[office].timeSeriesData,
+    timeSeriesData: state.vizReducer[office].timeSeriesData,
   };
 };
 
-function TimeSeriesSingleOffice(props) {
+function TimeSeries(props) {
   const { office, timeSeriesData } = props;
   const currentYear = new Date().getFullYear();
   const [plotlyGraphAxis, setPlotlyGraphAxis] = useState({
@@ -21,12 +24,11 @@ function TimeSeriesSingleOffice(props) {
     y: [],
   });
   const [rowsForTable, setRowsForTable] = useState([]);
-
   useEffect(() => {
-    if (timeSeriesData['singleOfficeDataObject'] !== undefined) {
+    if (timeSeriesData['dataObject'] !== undefined) {
       setPlotlyGraphAxis({
-        x: timeSeriesData['singleOfficeDataObject']['xYears'],
-        y: timeSeriesData['singleOfficeDataObject']['yTotalPercentGranteds'],
+        x: timeSeriesData['dataObject']['xYears'],
+        y: timeSeriesData['dataObject']['yTotalPercentGranteds'],
       });
     } else {
       setPlotlyGraphAxis({ x: [2015, currentYear], y: [] });
@@ -36,7 +38,7 @@ function TimeSeriesSingleOffice(props) {
     } else {
       setRowsForTable(timeSeriesData.rowsForTable);
     }
-  }, [timeSeriesData, currentYear]);
+  }, []);
 
   const columnsForTable = [
     'Fiscal Year',
@@ -45,9 +47,10 @@ function TimeSeriesSingleOffice(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
+  console.log('TimeSeries', office, timeSeriesData);
   return (
     <div
-      className="time-series-single-office-container"
+      className="time-series-container"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -56,7 +59,7 @@ function TimeSeriesSingleOffice(props) {
         minHeight: '100px',
       }}
     >
-      <p>Showing: Time series data for all USCIS Asylum Offices - ({office})</p>
+      <p>Showing: Time series data for USCIS Asylum Office - ({office})</p>
       <Plot
         data={[
           {
@@ -64,13 +67,17 @@ function TimeSeriesSingleOffice(props) {
             y: plotlyGraphAxis['y'],
             type: 'scatter',
             mode: 'lines+markers',
+            // setting these explicitly so they are easy to change later:
             yMax: 1,
             dy: 1,
-            dx: 1, // setting these explicitly so they are easy to change later
+            dx: 1,
           },
         ]}
         layout={{
-          title: `Asylum Grant Rate for the ${office} Asylum Office Over Time`,
+          title:
+            office === 'All Offices'
+              ? 'Asylum Grant Rate for All USCIS Asylum Offices Over Time'
+              : `Asylum Grant Rate for the ${office} Asylum Office Over Time`,
           height: 500,
           width: 700,
           yaxis: {
@@ -103,4 +110,4 @@ function TimeSeriesSingleOffice(props) {
   );
 }
 
-export default connect(mapStateToProps)(TimeSeriesSingleOffice);
+export default connect(mapStateToProps)(TimeSeries);

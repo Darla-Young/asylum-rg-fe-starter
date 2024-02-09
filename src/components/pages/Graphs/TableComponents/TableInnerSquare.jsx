@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors } from '../../../../../styles/data_vis_colors';
+import { colors } from '../../../../styles/data_vis_colors';
 
 const { background_color } = colors;
 
