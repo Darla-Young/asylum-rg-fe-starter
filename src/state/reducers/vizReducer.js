@@ -29,6 +29,12 @@ import {
       ------------------------------------------------------
 */
 const currentYear = new Date().getFullYear();
+const officeData = {
+  timeSeriesData: {},
+  timeSeriesYears: [2015, currentYear],
+  citizenshipMapData: {},
+  citizenshipMapYears: [2015, currentYear],
+};
 export const initialState = {
   timeSeriesAllData: {},
   timeSeriesAllYears: [2015, currentYear],
@@ -37,66 +43,16 @@ export const initialState = {
   citizenshipMapAllData: {},
   citizenshipMapAllYears: [2015, currentYear],
   offices: {
-    'Los Angeles, CA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'San Francisco, CA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'New York, NY': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Houston, TX': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Chicago, IL': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Newark, NJ': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Arlington, VA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Boston, MA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'Miami, FL': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
-    'New Orleans, LA': {
-      timeSeriesData: {},
-      timeSeriesYears: [2015, currentYear],
-      citizenshipMapData: {},
-      citizenshipMapYears: [2015, currentYear],
-    },
+    'Los Angeles, CA': { ...officeData },
+    'San Francisco, CA': { ...officeData },
+    'New York, NY': { ...officeData },
+    'Houston, TX': { ...officeData },
+    'Chicago, IL': { ...officeData },
+    'Newark, NJ': { ...officeData },
+    'Arlington, VA': { ...officeData },
+    'Boston, MA': { ...officeData },
+    'Miami, FL': { ...officeData },
+    'New Orleans, LA': { ...officeData },
   },
 };
 

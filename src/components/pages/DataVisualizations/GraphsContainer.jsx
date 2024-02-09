@@ -26,97 +26,18 @@ function GraphsContainer() {
     'New Orleans, LA',
   ];
   function handle_office_select(value) {
-    // if (view === 'office-heat-map') {
-    //   set_view('time-series');
-    // }
-    // if (value === 'All') {
-    //   history.push(
-    //     `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
-    //   );
-    // }
-    // history.push(
-    //   `/graphs/${value}/${view === 'office-heat-map' ? 'time-series' : view}`
-    // );
-
-    switch (value) {
-      case 'All Offices':
-        history.push(
-          `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
-        );
-        break;
-      case 'Los Angeles, CA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'San Francisco, CA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'New York, NY':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Houston, TX':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Chicago, IL':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Newark, NJ':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Arlington, VA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Boston, MA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'Miami, FL':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      case 'New Orleans, LA':
-        history.push(
-          `/graphs/${value}/${
-            view === 'office-heat-map' ? 'time-series' : view
-          }`
-        );
-        break;
-      default:
+    if (view === 'office-heat-map') set_view('time-series');
+    if (value === 'All Offices') {
+      history.push(
+        `/graphs/all/${view === 'office-heat-map' ? 'time-series' : view}`
+      );
+    } else {
+      history.push(
+        `/graphs/${value}/${view === 'office-heat-map' ? 'time-series' : view}`
+      );
     }
   }
+
   return (
     <div
       style={{

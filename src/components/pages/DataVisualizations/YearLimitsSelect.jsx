@@ -76,7 +76,7 @@ function YearLimitsSelect(props) {
   }, 10);
 
   useEffect(() => {
-    updateStateWithNewData(years, view, office, stateSettingFn);
+    updateStateWithNewData(/*years,*/ view, office, stateSettingFn);
   });
 
   return (
