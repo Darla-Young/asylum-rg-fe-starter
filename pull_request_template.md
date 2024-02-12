@@ -1,18 +1,14 @@
 ## Description
 
-GraphWrapper file changed to integrate app with API. Some functions require future changes in other files (such as choosing which years to display). These features are currently commented out.
 
-Removed unnecessarily repeated code in: 
-  - function 'handleOfficeSelect' in GraphContainer; and,
-  - 'initialState' object in vizReducer;
 
 #### Video Link
 
-[Loom Video] https://www.loom.com/share/d63de75599554620b9736247ea8e7b02?sid=3372c0eb-c5d8-4274-8673-f7fef48488a9
+[Loom Video] 
 
 #### Jira Link
 
-https://github.com/BloomTech-Labs/asylum-rg-fe-starter/blob/main/tickets/secondTicket.md
+https://github.com/BloomTech-Labs/asylum-rg-fe-starter/blob/main/tickets/thirdTicket.md
 
 ## Type of change
 
