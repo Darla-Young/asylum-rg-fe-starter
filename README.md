@@ -1,5 +1,9 @@
 # Human Rights First: Asylum Report Generator
 
+Example log in for testing:
+  username: example@example.com
+  password: Example1!
+
 ## North Star
 - A search tool to give a user-friendly view into a large dataset of asylum case decisions.
 - Similar to the [TRAC](https://trac.syr.edu/phptools/immigration/asylum/) database—a popular existing tool, but with many limitations.

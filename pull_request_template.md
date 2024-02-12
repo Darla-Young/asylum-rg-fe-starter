@@ -1,6 +1,13 @@
 ## Description
 
-
+- Installed Auth0 v5 as a dependency
+  *** Several "critical" vulnerabilities! ***
+  * Recommend upgrading to latest version of React & Auth0 v6
+- Created route "/loading" for seamless transition from Auth0 to profile page
+- Wrapped "App" component in Auth0Provider allowing auth to be used throughout the app as needed
+- Created dummy username and password for testing & added it to ReadMe
+- Added "Log In" / "Log Out" / "Sign Up" buttons to display conditionally on header
+- 
 
 #### Video Link
 
