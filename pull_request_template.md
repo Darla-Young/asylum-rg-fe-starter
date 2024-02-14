@@ -10,7 +10,7 @@
 
 #### Video Link
 
-[Loom Video] 
+[Loom Video] https://www.loom.com/share/d8fc34b46aca42dd8099c7bc8587a000?sid=9ea42130-c8ef-4cd1-8450-0d3f0cf2d109 
 
 #### Jira Link
 
