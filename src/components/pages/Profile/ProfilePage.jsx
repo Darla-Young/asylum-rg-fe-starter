@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import '../../../styles/LessRenders/Pages/ProfilePage.less';
 import { LoginButton } from '../../common/Buttons/Login';
 import { SignupButton } from '../../common/Buttons/Signup';
+import { LogoutButton } from '../../common/Buttons/Logout';
 
 function ProfilePage(props) {
   const { isAuthenticated, user } = useAuth0();
@@ -19,6 +20,7 @@ function ProfilePage(props) {
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
           </div>
+          <LogoutButton />
         </div>
       )}
       {!isAuthenticated && (
