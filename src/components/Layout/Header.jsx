@@ -2,72 +2,11 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Image } from 'antd';
 import { Link } from 'react-router-dom';
-import { default as Button } from '../common/Button';
+import { LoginButton } from '../common/Buttons/Login';
+import { LogoutButton } from '../common/Buttons/Logout';
+import { SignupButton } from '../common/Buttons/Signup';
 import Logo from '../../styles/Images/WhiteLogo.png';
-import '../../styles/LessRenders/RenderHeader.less';
-
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-  const handleLogin = async () => {
-    await loginWithRedirect({
-      appState: {
-        returnTo: '/profile',
-      },
-    });
-  };
-
-  return (
-    <Button
-      handleClick={handleLogin}
-      isDisabled={false}
-      classType="header-button"
-      buttonText="Log In"
-    />
-  );
-};
-
-const SignupButton = () => {
-  const { loginWithRedirect } = useAuth0();
-  const handleSignUp = async () => {
-    await loginWithRedirect({
-      appState: {
-        returnTo: '/profile',
-      },
-      authorizationParams: {
-        screen_hint: 'signup',
-      },
-    });
-  };
-
-  return (
-    <Button
-      handleClick={handleSignUp}
-      isDisabled={false}
-      classType="header-button"
-      buttonText="Sign Up"
-    />
-  );
-};
-
-const LogoutButton = () => {
-  const { logout } = useAuth0();
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
-  };
-
-  return (
-    <Button
-      handleClick={handleLogout}
-      isDisabled={false}
-      classType="header-button"
-      buttonText="Log Out"
-    />
-  );
-};
+import '../../styles/LessRenders/Layout/Header.less';
 
 function HeaderContent() {
   const { isAuthenticated } = useAuth0();
@@ -88,13 +27,13 @@ function HeaderContent() {
         </Link>
         {!isAuthenticated && (
           <>
-            <SignupButton />
-            <LoginButton />
+            <SignupButton className="header-button" />
+            <LoginButton className="header-button" />
           </>
         )}
         {isAuthenticated && (
           <>
-            <LogoutButton />
+            <LogoutButton className="header-button" />
           </>
         )}
       </div>

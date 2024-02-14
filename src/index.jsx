@@ -10,7 +10,7 @@ import { Auth0ProviderWithHistory as Auth0Provider } from './auth0-provider-with
 
 import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
-import { LoadingPage } from './components/pages/Protected/LoadingPage';
+import { ProfilePage } from './components/pages/Profile';
 import { LandingPage } from './components/pages/Landing';
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
@@ -47,7 +47,7 @@ export function App() {
       <Content>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/loading" component={LoadingPage} />
+          <Route path="/profile" component={ProfilePage} />
           <Route path="/graphs" component={GraphsContainer} />
           <Route component={NotFoundPage} />
         </Switch>
