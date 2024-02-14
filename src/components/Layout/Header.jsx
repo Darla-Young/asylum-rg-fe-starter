@@ -25,6 +25,7 @@ function HeaderContent() {
         <Link className="header-link" to="/graphs">
           Graphs
         </Link>
+
         {!isAuthenticated && (
           <>
             <SignupButton className="header-button" />
@@ -33,6 +34,9 @@ function HeaderContent() {
         )}
         {isAuthenticated && (
           <>
+            <Link className="header-link" to="/profile">
+              Profile
+            </Link>
             <LogoutButton className="header-button" />
           </>
         )}

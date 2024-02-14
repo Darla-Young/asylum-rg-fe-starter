@@ -6,13 +6,23 @@ import { LoginButton } from '../../common/Buttons/Login';
 import { SignupButton } from '../../common/Buttons/Signup';
 
 function ProfilePage(props) {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
 
   return (
     <>
-      {isAuthenticated && <h1>Welcome {/* get username */}!</h1>}
-      {!isAuthenticated && (
+      {isAuthenticated && (
         <div id="profile-container">
+          <h1>Welcome {user.nickname}!</h1>
+          <div className="profile-info">
+            <h2>User Profile:</h2>
+            <img src={user.picture} alt="Avatar" />
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+          </div>
+        </div>
+      )}
+      {!isAuthenticated && (
+        <div id="nouser-container">
           <h1>To view this page, please choose an option: </h1>
           <div className="button-container">
             <LoginButton />

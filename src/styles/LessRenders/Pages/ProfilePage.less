@@ -1,4 +1,34 @@
-div#profile-container {
+// for authenticated users
+#profile-container {
+  width: 100%;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2%;
+
+  h1 {
+    font-size: large;
+  }
+
+  h2 {
+    font-size: medium;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2%;
+
+    img {
+      margin-bottom: 10%;
+    }
+  }
+}
+
+// for un-authenticated users
+#nouser-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,5 +45,4 @@ div#profile-container {
       margin: 2%;
     }
   }
-
 }
