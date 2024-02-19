@@ -6,11 +6,12 @@ import {
   // useHistory,
   Switch,
 } from 'react-router-dom';
+import { Auth0ProviderWithHistory as Auth0Provider } from './auth0-provider-with-history';
 
 import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
+import { ProfilePage } from './components/pages/Profile';
 import { LandingPage } from './components/pages/Landing';
-
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
 
@@ -27,7 +28,9 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <React.StrictMode>
-        <App />
+        <Auth0Provider>
+          <App />
+        </Auth0Provider>
       </React.StrictMode>
     </Provider>
   </Router>,
@@ -44,6 +47,7 @@ export function App() {
       <Content>
         <Switch>
           <Route path="/" exact component={LandingPage} />
+          <Route path="/profile" component={ProfilePage} />
           <Route path="/graphs" component={GraphsContainer} />
           <Route component={NotFoundPage} />
         </Switch>

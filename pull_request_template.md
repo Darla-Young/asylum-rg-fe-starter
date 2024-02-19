@@ -1,18 +1,20 @@
 ## Description
 
-GraphWrapper file changed to integrate app with API. Some functions require future changes in other files (such as choosing which years to display). These features are currently commented out.
-
-Removed unnecessarily repeated code in: 
-  - function 'handleOfficeSelect' in GraphContainer; and,
-  - 'initialState' object in vizReducer;
+- Installed Auth0 v5 as a dependency
+  *** Several "critical" vulnerabilities! ***
+  * Recommend upgrading to latest version of React & Auth0 v6
+- Wrapped "App" component in Auth0Provider allowing auth to be used throughout the app as needed
+- Created dummy username and password for testing & added it to ReadMe
+- Added "Log In" / "Profile" / "Log Out" / "Sign Up" buttons to display conditionally on header
+- Created profile page with prompts to log in or sign up if not authenticated
 
 #### Video Link
 
-[Loom Video] https://www.loom.com/share/d63de75599554620b9736247ea8e7b02?sid=3372c0eb-c5d8-4274-8673-f7fef48488a9
+[Loom Video] https://www.loom.com/share/d8fc34b46aca42dd8099c7bc8587a000?sid=9ea42130-c8ef-4cd1-8450-0d3f0cf2d109 
 
 #### Jira Link
 
-https://github.com/BloomTech-Labs/asylum-rg-fe-starter/blob/main/tickets/secondTicket.md
+https://github.com/BloomTech-Labs/asylum-rg-fe-starter/blob/main/tickets/thirdTicket.md
 
 ## Type of change
 
