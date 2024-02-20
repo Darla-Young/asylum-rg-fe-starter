@@ -1,13 +1,9 @@
-import React from 'react';
 import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
 import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
 import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
 import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
-import '../../../styles/LessRenders/RenderLandingPage.less';
 import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
-// for the purposes of testing PageNav
-// import PageNav from '../../common/PageNav';
 
 function RenderLandingPage() {
   const scrollToTop = () => {

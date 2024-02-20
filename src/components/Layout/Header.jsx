@@ -1,8 +1,6 @@
-import React from 'react';
 import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../styles/Images/WhiteLogo.png';
-import '../../styles/LessRenders/RenderHeader.less';
 
 function HeaderContent() {
   return (

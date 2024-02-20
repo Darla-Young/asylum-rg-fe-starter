@@ -15,7 +15,7 @@ function ViewSelect(props) {
     set_view(view);
     history.push(`/graphs/${office}/${view}`);
   }
-  console.log('ViewSelect', office);
+
   return (
     <div
       className="view-select-container"

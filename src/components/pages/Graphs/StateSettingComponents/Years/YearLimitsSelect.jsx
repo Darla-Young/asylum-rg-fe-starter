@@ -12,23 +12,21 @@ import { colors } from '../../../../../styles/data_vis_colors';
 
 const { primary_accent_color } = colors;
 
-const mapStateToProps = (state, ownProps) => {
-  let { view } = ownProps;
-  let { office } = state;
-  if (!office) office = 'All Offices';
+const mapStateToProps = state => {
+  let { view } = state.vizReducer.view;
 
   switch (view) {
     case 'time-series':
       return {
-        years: state.vizReducer[office].timeSeriesYears,
+        years: state.vizReducer.office.timeSeriesYears,
       };
     case 'office-heat-map':
       return {
-        years: state.vizReducer[office].officeHeatMapYears,
+        years: state.vizReducer.office.officeHeatMapYears,
       };
     case 'citizenship':
       return {
-        years: state.vizReducer[office].citizenshipMapYears,
+        years: state.vizReducer.office.citizenshipMapYears,
       };
     default:
       return {
@@ -38,8 +36,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 function YearLimitsSelect(props) {
-  let { view, office, dispatch, clearQuery, updateStateWithNewData, years } =
-    props;
+  let { view, office, dispatch, clearQuery, updateState, years } = props;
   // const yearInputsOnChange = (view, office, e) => {
   //   dispatch(
   //     setHeatMapYears(
@@ -62,9 +59,9 @@ function YearLimitsSelect(props) {
   }, 10);
 
   useEffect(() => {
-    updateStateWithNewData(/*years,*/ view, office, stateSettingFn);
+    updateState(years, view, office, stateSettingFn);
   });
-  console.log('YearLimitsSelect', view, office);
+
   return (
     <div
       className="year-limits-select-container"
@@ -86,7 +83,7 @@ function YearLimitsSelect(props) {
         name="yearLimitsSelect"
         initialValues={{ year_start: years[0], year_end: years[1] }}
         onFinish={() => {
-          updateStateWithNewData(years, view, office, stateSettingFn);
+          updateState(years, view, office, stateSettingFn);
         }}
         autoComplete="off"
         layout="inline"
@@ -166,7 +163,7 @@ function YearLimitsSelect(props) {
           marginLeft: '105px',
         }}
         onClick={() => {
-          clearQuery(view, office);
+          clearQuery();
         }}
       >
         Clear Query

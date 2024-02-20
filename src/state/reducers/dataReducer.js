@@ -55,10 +55,17 @@ function dataReducer(state = initialState, action) {
       };
     }
     case TOGGLE_ADVANCED_SEARCH: {
-      return { ...state, displayAdvancedSearch: action.payload };
+      return {
+        ...state,
+        displayAdvancedSearch: action.payload,
+      };
     }
     case RESET_CASE_DATA: {
-      return { ...state, filterCount: 0, filteredCases: [] };
+      return {
+        ...state,
+        filterCount: 0,
+        filteredCases: [],
+      };
     }
     default: {
       return state;

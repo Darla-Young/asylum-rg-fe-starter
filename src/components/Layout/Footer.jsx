@@ -1,7 +1,5 @@
 import { Button, Space, Typography, Image } from 'antd';
-import React from 'react';
 import Logo from '../../styles/Images/WhiteLogo.png';
-import '../../styles/LessRenders/RenderFooter.less';
 
 const { Text } = Typography;
 

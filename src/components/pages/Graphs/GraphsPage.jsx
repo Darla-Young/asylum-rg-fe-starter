@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import CitizenshipMap from './StateSettingComponents/Views/CitizenshipMap';
@@ -6,8 +5,7 @@ import OfficeHeatMap from './StateSettingComponents/Views/OfficeHeatMap';
 import TimeSeries from './StateSettingComponents/Views/TimeSeries';
 import YearLimitsSelect from './StateSettingComponents/Years/YearLimitsSelect';
 import ViewSelect from './StateSettingComponents/Views/ViewSelect';
-import axios from 'axios';
-import { resetVisualizationQuery } from '../../../state/actionCreators';
+import { resetVisualizationData } from '../../../state/actionCreators';
 // import test_data from '../../../data/test_data.json';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
@@ -15,7 +13,7 @@ import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 const { background_color } = colors;
 
 function GraphWrapper(props) {
-  let { view, office, dispatch } = props;
+  let { view, office, dispatch, updateState } = props;
   const history = useHistory();
 
   const mapDisplay = view => {
@@ -31,25 +29,8 @@ function GraphWrapper(props) {
     }
   };
 
-  const updateState = (/*years,*/ view, office, stateSettingCallback) => {
-    const url = 'https://hrf-asylum-be-b.herokuapp.com/cases';
-
-    axios
-      .get(`${url}/fiscalSummary` /**{params: {from: years[0], to: years[1]}}*/)
-      .then(result => {
-        console.log('fiscal summary', result);
-        stateSettingCallback(view, office, result.data);
-      })
-      .catch(err => console.error(err));
-
-    axios
-      .get(`${url}/citizenshipSummary`)
-      .then(result => console.log('citizenship summary', result))
-      .catch(err => console.log(err));
-  };
-
   const clearQuery = (view, office) => {
-    dispatch(resetVisualizationQuery(view, office));
+    dispatch(resetVisualizationData());
     history.push(`/graphs/`);
   };
 

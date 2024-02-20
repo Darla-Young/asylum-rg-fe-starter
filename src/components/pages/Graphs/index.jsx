@@ -11,15 +11,27 @@ const { background_color } = colors;
 
 const mapStateToProps = state => {
   return {
-    office: state.vizReducer.currentOffice,
-    offices: state.vizReducer.offices,
+    office: state.vizReducer.office.location,
     view: state.vizReducer.view,
   };
 };
 
 function GraphsContainer(props) {
-  const { office, offices, view } = props;
+  const { office, view, updateState } = props;
   const history = useHistory();
+  const offices = [
+    'All Offices',
+    'Los Angeles, CA',
+    'San Francisco, CA',
+    'New York, NY',
+    'Houston, TX',
+    'Chicago, IL',
+    'Newark, NJ',
+    'Arlington, VA',
+    'Boston, MA',
+    'Miami, FL',
+    'New Orleans, LA',
+  ];
 
   const handle_office_select = value => {
     setVisualizationData(
@@ -71,10 +83,7 @@ function GraphsContainer(props) {
             ))}
           </Select>
         </div>
-        <Route
-          path="/graphs/"
-          component={() => GraphWrapper({ view, office })}
-        />
+        <GraphWrapper view={view} updateState={updateState} office={office} />
       </div>
     </div>
   );

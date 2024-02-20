@@ -12,7 +12,7 @@ const mapStateToProps = state => {
   if (!office) office = 'All Offices';
 
   return {
-    timeSeriesData: state.vizReducer[office].timeSeriesData,
+    timeSeriesData: state.vizReducer.office.timeSeriesData,
   };
 };
 
@@ -47,7 +47,7 @@ function TimeSeries(props) {
     '% Admin Close / Dismissal',
     '% Denied',
   ];
-  console.log('TimeSeries', office, timeSeriesData);
+
   return (
     <div
       className="time-series-container"
